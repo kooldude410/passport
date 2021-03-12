@@ -10,7 +10,7 @@ app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
     session({
-        secret: "secret", //encryption for cookie
+        secret: "secret",
         resave: false,
         saveUninitialized: false,
         cookie: {
@@ -44,9 +44,19 @@ app.use((req, res, next) => {
     next();
 });
 
-
 app.use("/", indexRoute);
 app.use("/auth", authRoute);
+
+
+app.get('/auth/github',
+    passport.authenticate('github'));
+
+app.get('/auth/github/callback',
+    passport.authenticate('github', { failureRedirect: '/login' }),
+    function(req, res) {
+        // Successful authentication, redirect home.
+        res.redirect('/');
+    });
 
 
 
