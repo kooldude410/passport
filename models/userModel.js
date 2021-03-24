@@ -16,6 +16,12 @@ const database = [{
         email: "kooldude_410@hotmail.com",
         password: "jonathan123!",
     },
+    {
+        id: "22462457",
+        name: "Michael Hao",
+        email: "kooldude_410@hotmail.com",
+        password: "jonathan123!",
+    },
 ];
 
 const userModel = {

@@ -23,27 +23,30 @@ passport.use(new GitHubStrategy({
         clientSecret: "be5707b4d46a32520a74b88bcf33f6a0fafd081f",
         callbackURL: "http://localhost:8000/auth/github/callback",
     },
-    function(accessToken, refreshToken, profile) {
-
-        userModel.findOne({ "githubId": profile.id }, function(err, user) {
-            if (err) { return done(err); }
-            if (!user) {
-                user = new User({
-                    name: profile.displayName,
-                    email: profile.emails[0].value,
-                    username: profile.username,
-                    provider: 'github',
-
-                    github: profile._json
-                });
-                user.save(function(err) {
-                    if (err) console.log(err);
-                    return done(err, user);
-                });
-            } else {
-                return done(err, user);
-            }
+    (accessToken, refreshToken, profile, done) => {
+        process.nextTick(function() {
+            return done(null, profile);
         });
+
+        //userModel.findOne({ "githubId": profile.id }, function(err, user) {
+        //if (err) { return done(err); }
+        //if (!user) {
+        //user = new User({
+        //name: profile.displayName,
+        //email: profile.emails[0].value,
+        //username: profile.username,
+        //provider: 'github',
+
+        //github: profile._json
+        //});
+        //user.save(function(err) {
+        //if (err) console.log(err);
+        //return done(err, user);
+        //});
+        //} else {
+        //return done(err, user);
+        //}
+        //});
 
     }
 ));
